@@ -4,7 +4,7 @@ Um simples back-end feito em Python e Flask, para fazer o processamento da image
 
 ## Fazendo o back-end funcionar
 
-Primeiro crie um Venv (Virtual Environments / Ambiente Virtual) dentro da **..\V1\api_ocr**.
+Primeiro crie um Venv (Virtual Environments / Ambiente Virtual) dentro da <strong>..\V1\api_ocr</strong>.
 
 ```
 py -m venv ./venv
@@ -22,7 +22,7 @@ Baixe os pacotes necessarios usando o seguinte comando
 pip install -r requirements.txt
 ```
 
-Pegue o **IPv4** de sua maquina e use-o para executar a aplicação
+Pegue o <strong>IPv4</strong> de sua maquina e use-o para executar a aplicação
 
 ```
 flask --app app/main --debug run -h <IPv4> -p 5000
@@ -44,4 +44,4 @@ Ela recebe dois parametros
 }
 ```
 
-Ela retorna uma **String** com o texto identificado na imagem
+Ela retorna uma <strong>String</strong> com o texto identificado na imagem
