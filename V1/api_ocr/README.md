@@ -4,7 +4,7 @@ Um simples back-end feito em Python e Flask, para fazer o processamento da image
 
 ## Fazendo o back-end funcionar
 
-Primeiro crie um Venv (Virtual Environments / Ambiente Virtual) dentro da **../TCC/V1/api_ocr**.
+Primeiro crie um Venv (Virtual Environments / Ambiente Virtual) dentro da **..\V1\api_ocr**.
 
 ```
 py -m venv ./venv
