@@ -15,7 +15,7 @@ start ms-settings:developers
 ```
 
 <hr>
-Pegue o **IPv4** de sua maquina e use-o para substituir o seguinte codigo dentro de **../lib\utils\constants.dart**
+Pegue o <strong>IPv4</strong> de sua maquina e use-o para substituir o seguinte codigo dentro de <strong>..\lib\utils\constants.dart</strong>
 
 ```
 3| const BASE_URL = 'http://<IPv4>:5000/';
