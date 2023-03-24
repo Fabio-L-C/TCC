@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:ocr_tts/pages/result_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 // import 'package:text_recognition_flutter/result_screen.dart';
 
@@ -21,10 +22,12 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   CameraController? _cameraController;
 
   final textRecognizer = TextRecognizer();
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
 
     _future = _requestCameraPermission();
@@ -76,6 +79,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
             Scaffold(
               appBar: AppBar(
                 title: const Text('Text Recognition Sample'),
+                centerTitle: true,
               ),
               backgroundColor: _isPermissionGranted ? Colors.transparent : null,
               body: _isPermissionGranted
@@ -84,12 +88,20 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                         Expanded(
                           child: Container(),
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: Center(
-                            child: ElevatedButton(
-                              onPressed: _scanImage,
-                              child: const Text('Scan text'),
+                        GestureDetector(
+                          onTap: _scanImage,
+                          child: Container(
+                            color: Colors.blue,
+                            height: 60,
+                            child: const Center(
+                              child: Text(
+                                'Scan text',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -164,10 +176,19 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     setState(() {});
   }
 
+  speak(String text) async {
+    // await flutterTts.stop();
+    await flutterTts.setLanguage("pt-BR");
+    await flutterTts.setVoice({"name": "pt-BR-language", "locale": "pt-BR"});
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1);
+
+    await flutterTts.awaitSpeakCompletion(false);
+    await flutterTts.speak(text);
+  }
+
   Future<void> _scanImage() async {
     if (_cameraController == null) return;
-
-    final navigator = Navigator.of(context);
 
     try {
       final pictureFile = await _cameraController!.takePicture();
@@ -177,12 +198,11 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      await navigator.push(
-        MaterialPageRoute(
-          builder: (BuildContext context) =>
-              ResultScreen(text: recognizedText.text),
-        ),
-      );
+      if (recognizedText.text != null && recognizedText.text.isNotEmpty) {
+        speak(recognizedText.text);
+      }
+
+      // Timer.periodic(const Duration(seconds: 10), (Timer t) => _scanImage());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
