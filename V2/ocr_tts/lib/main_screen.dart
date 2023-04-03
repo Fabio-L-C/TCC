@@ -198,7 +198,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       final inputImage = InputImage.fromFile(file);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      if (recognizedText.text != null && recognizedText.text.isNotEmpty) {
+      if (recognizedText.text.isNotEmpty) {
         speak(recognizedText.text);
       }
 
