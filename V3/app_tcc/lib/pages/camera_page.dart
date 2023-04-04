@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 class CameraPage extends StatefulWidget {
@@ -67,21 +68,28 @@ class _CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
             ),
             Column(
               children: [
+                // Expanded(
+                //   child: Container(),
+                // ),
                 Expanded(
-                  child: Container(),
-                ),
-                GestureDetector(
-                  onTap: _scanImage,
-                  child: Container(
-                    color: Colors.blue,
-                    height: 60,
-                    child: const Center(
-                      child: Text(
-                        'Scan text',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.vibrate();
+                      SystemSound.play(SystemSoundType.click);
+                      Feedback.forTap(context);
+                      _scanImage();
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 60,
+                      child: const Center(
+                        child: Text(
+                          'Scan text',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

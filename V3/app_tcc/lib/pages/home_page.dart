@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
   //   doVoiceSynthesis(
   //       'Olá, seja bem vindo ao aplicativo de reconhecimento de objetos e texto.'
   //       'Para usar-lo basta apontar a câmera para o objeto ou texto'
-  //       'que deseja reconhecer e apertar o botão abaixo.');
+  //       'que deseja reconhecer e pressione a tela do dispositivo.');
   // }
 
   @override
